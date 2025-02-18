@@ -1,4 +1,4 @@
-package com.cart;
+package com.store;
 
 public class Product {
 
@@ -11,17 +11,17 @@ public class Product {
         this.ID = id;
         this.name = name;
         this.cost = cost;
-   
+
     }
 
     public void setProductName(String name) {
         this.name = name;
     }
 
-    public void setProductCost(double cost ) {
+    public void setProductCost(double cost) {
         this.cost = cost;
     }
-    
+
     public int getProductID() {
         return this.ID;
     }
@@ -34,5 +34,4 @@ public class Product {
         return this.cost;
     }
 
-    
 }

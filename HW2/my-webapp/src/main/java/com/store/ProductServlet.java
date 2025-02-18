@@ -1,4 +1,4 @@
-package com.cart;
+package com.store;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.store.Product;
 
-@WebServlet(urlPatterns = {"/products", "/products/create", "/products/update", "/products/delete"})
+@WebServlet(urlPatterns = { "/products", "/products/create", "/products/update", "/products/delete" })
 public class ProductServlet extends HttpServlet {
 
     ArrayList<Product> listOfProducts = new ArrayList<>();
@@ -23,30 +24,27 @@ public class ProductServlet extends HttpServlet {
 
     public ProductServlet() {
         createProducts();
+        productIdGenerator.set(listOfProducts.size() + 1);
     }
 
     private void createProducts() {
 
-    Product product1 = new Product(1, "Item 1", 3.99);
-    Product product2 = new Product(2, "Item 2", 4.99);
-    Product product3 = new Product(3, "Item 3", 5.99);
-    listOfProducts.add(product1);
-    listOfProducts.add(product2);
-    listOfProducts.add(product3);
+        Product product1 = new Product(1, "Orange", 3.99);
+        Product product2 = new Product(2, "Apple", 4.99);
+        Product product3 = new Product(3, "Pear", 5.99);
+        listOfProducts.add(product1);
+        listOfProducts.add(product2);
+        listOfProducts.add(product3);
 
     }
-
-    
-
 
     // Handle @GET requests on servlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-
 
         String servletPath = req.getServletPath();
         if ("/products".equals(servletPath)) {
@@ -54,17 +52,16 @@ public class ProductServlet extends HttpServlet {
         } else {
             resp.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
-
     }
+
     // @GET
     // /products
     // returns the list of products, including ID, name, and cost
     private void handleGetProducts(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-            
-            JSONArray productsArray = new JSONArray();
+        JSONArray productsArray = new JSONArray();
 
-            for (int i = 0; i < listOfProducts.size(); i++) {
+        for (int i = 0; i < listOfProducts.size(); i++) {
 
             Product product = listOfProducts.get(i);
             JSONObject jsonProduct = new JSONObject();
@@ -81,7 +78,6 @@ public class ProductServlet extends HttpServlet {
             productsArray.put(jsonProduct);
         }
 
-
         JSONObject responseJson = new JSONObject();
         responseJson.put("Products", productsArray);
 
@@ -89,20 +85,19 @@ public class ProductServlet extends HttpServlet {
 
     }
 
-  
-
     // @POST
     // URL Handler
-    // creates a product stored locally in the servlet, returns the ID of the product
+    // creates a product stored locally in the servlet, returns the ID of the
+    // product
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-
-          String servletPath = req.getServletPath();
+        String servletPath = req.getServletPath();
         if ("/products/create".equals(servletPath)) {
+            System.out.println(servletPath);
             handleCreateProduct(req, resp);
         } else {
             resp.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -113,11 +108,12 @@ public class ProductServlet extends HttpServlet {
     }
 
     // @POST
-    // /products/create/name=?&price=?
-      private void handleCreateProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    // /products/create?name=?&price=?
+    private void handleCreateProduct(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         String name = req.getParameter("name");
         String paramPrice = req.getParameter("price");
-        
+
         JSONObject responseJson = new JSONObject();
 
         if (name == null && paramPrice == null) {
@@ -126,7 +122,7 @@ public class ProductServlet extends HttpServlet {
         } else if (name == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseJson.put("error", "Missing name field.");
-        } else if (paramPrice.isEmpty()){
+        } else if (paramPrice.isEmpty()) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseJson.put("error", "Missing price field");
         } else {
@@ -141,7 +137,6 @@ public class ProductServlet extends HttpServlet {
                 responseJson.put("id", newProductID);
                 resp.setStatus(HttpServletResponse.SC_CREATED);
 
-
             } catch (NumberFormatException e) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 responseJson.put("error", "invalid price format");
@@ -151,18 +146,16 @@ public class ProductServlet extends HttpServlet {
         writeResponse(resp, responseJson);
     }
 
-  
     // @PUT
     // URL Handler for PUT requests
     // finds and updates the price of the product based on the id and updated cost
     protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
 
-    resp.setContentType("application/json");
-    resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
 
-    
-          String servletPath = req.getServletPath();
+        String servletPath = req.getServletPath();
         if ("/products/update".equals(servletPath)) {
             handleUpdateProduct(req, resp);
         } else {
@@ -171,18 +164,18 @@ public class ProductServlet extends HttpServlet {
     }
 
     // @PUT
-    // /products/update/id=?&price=?
+    // /products/update?id=?&price=?
     private void handleUpdateProduct(HttpServletRequest req, HttpServletResponse resp) {
 
         JSONObject responseJson = new JSONObject();
 
-    Integer updateID = Integer.parseInt(req.getParameter("id"));
-    Double oldCost;
-    Double newCost = Double.parseDouble(req.getParameter("cost"));
+        Integer updateID = Integer.parseInt(req.getParameter("id"));
+        Double oldCost;
+        Double newCost = Double.parseDouble(req.getParameter("cost"));
 
-    Product desiredProduct;
+        Product desiredProduct;
 
-    if (updateID.equals(null) && newCost.equals(null)) {
+        if (updateID.equals(null) && newCost.equals(null)) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseJson.put("error", "Missing id and price field.");
         } else if (updateID.equals(null)) {
@@ -193,91 +186,90 @@ public class ProductServlet extends HttpServlet {
             responseJson.put("error", "Missing new cost field");
         } else {
 
-    try {
-    for (int i = 0; i < listOfProducts.size(); i++) {
-        if (listOfProducts.get(i).getProductID() == updateID) {
-            oldCost = listOfProducts.get(i).getProductCost();
-            listOfProducts.get(i).setProductCost(newCost);
-            desiredProduct = listOfProducts.get(i);
-            responseJson.put("id", desiredProduct.getProductID());
-            responseJson.put("name", desiredProduct.getProductName());
-            responseJson.put("old_cost", oldCost);
-            responseJson.put("updated_cost", desiredProduct.getProductCost());
-            break;
-        } else if(i == listOfProducts.size()) {
-            responseJson.put("error", "invalid product ID. no product found");          
-        }
-    }} catch (NumberFormatException e ){
+            try {
+                for (int i = 0; i < listOfProducts.size(); i++) {
+                    if (listOfProducts.get(i).getProductID() == updateID) {
+                        oldCost = listOfProducts.get(i).getProductCost();
+                        listOfProducts.get(i).setProductCost(newCost);
+                        desiredProduct = listOfProducts.get(i);
+                        responseJson.put("id", desiredProduct.getProductID());
+                        responseJson.put("name", desiredProduct.getProductName());
+                        responseJson.put("old_cost", oldCost);
+                        responseJson.put("updated_cost", desiredProduct.getProductCost());
+                        break;
+                    } else if (i == listOfProducts.size()) {
+                        responseJson.put("error", "invalid product ID. no product found");
+                    }
+                }
+            } catch (NumberFormatException e) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 responseJson.put("error", "invalid price format");
+            }
+
+            writeResponse(resp, responseJson);
+
         }
-
-        writeResponse(resp, responseJson);
-    
     }
-    }
-
 
     // @DELETE
-    // /products/delete/id=?
+    // /products/delete?id=?
     // finds the product based on the ID, and deletes it
-   @Override
-protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-    resp.setContentType("application/json");
-    resp.setCharacterEncoding("UTF-8");
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
 
-    JSONObject responseJson = new JSONObject();
+        JSONObject responseJson = new JSONObject();
 
-    String idParam = req.getParameter("id");
-    if (idParam == null) {
-        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        responseJson.put("error", "Missing 'id' parameter");
-        writeResponse(resp, responseJson);
-        return;
-    }
-
-    int id;
-    try {
-        id = Integer.parseInt(idParam);
-    } catch (NumberFormatException e) {
-        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        responseJson.put("error", "Invalid 'id' format");
-        writeResponse(resp, responseJson);
-        return;
-    }
-
-
-    Product desiredProduct = null;
-    boolean foundProduct = false;
-
-    for (int i = 0; i < listOfProducts.size(); i++) {
-        if (listOfProducts.get(i).getProductID() == id) {
-            desiredProduct = listOfProducts.get(i);
-            listOfProducts.remove(i);
-            foundProduct = true;
-            break;
+        String idParam = req.getParameter("id");
+        if (idParam == null) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            responseJson.put("error", "Missing 'id' parameter");
+            writeResponse(resp, responseJson);
+            return;
         }
-    }
 
-    if (foundProduct) {
-        resp.setStatus(HttpServletResponse.SC_OK);
-        responseJson.put("deleted", desiredProduct.getProductID());
-        responseJson.put("name", desiredProduct.getProductName());
-    } else {
-        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        responseJson.put("error", "No product found for ID=" + id);
-    }
+        int id;
+        try {
+            id = Integer.parseInt(idParam);
+        } catch (NumberFormatException e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            responseJson.put("error", "Invalid 'id' format");
+            writeResponse(resp, responseJson);
+            return;
+        }
 
-    writeResponse(resp, responseJson);
-}
+        Product desiredProduct = null;
+        boolean foundProduct = false;
+
+        for (int i = 0; i < listOfProducts.size(); i++) {
+            if (listOfProducts.get(i).getProductID() == id) {
+                desiredProduct = listOfProducts.get(i);
+                listOfProducts.remove(i);
+                foundProduct = true;
+                break;
+            }
+        }
+
+        if (foundProduct) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+            responseJson.put("deleted", desiredProduct.getProductID());
+            responseJson.put("name", desiredProduct.getProductName());
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            responseJson.put("error", "No product found for ID=" + id);
+        }
+
+        writeResponse(resp, responseJson);
+    }
 
     private void writeResponse(HttpServletResponse resp, JSONObject responseJson) {
-    try (PrintWriter out = resp.getWriter()) {
-        out.print(responseJson.toString());
-        out.flush();
-    } catch (IOException e) {
-        e.printStackTrace();
+        try (PrintWriter out = resp.getWriter()) {
+            out.print(responseJson.toString());
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
 
 }
