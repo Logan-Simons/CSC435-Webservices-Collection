@@ -1,82 +1,78 @@
 package com.store;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import main.java.com.cart.CartUtil;
 
 public class Cart {
-
-    //
     private String cartName;
-    private ArrayList<Product> cartProducts;
-    private ArrayList<Integer> productQuantities;
-
+    private HashMap<Product, Integer> cartItems;  // Product as key, quantity as value
+    private CartUtil util = new CartUtil();
+    
     public Cart(String name) {
-
         this.cartName = name;
-        this.cartProducts = new ArrayList<>();
-        this.productQuantities = new ArrayList<>();
+        this.cartItems = new HashMap<>();
+    }
 
+    // Get all products in the cart
+    public java.util.Set<Product> getProducts() {
+        return cartItems.keySet();
+    }
+
+    // Get quantity of a specific product
+    public int getProductQuantity(Product product) {
+        return cartItems.getOrDefault(product, 0);
     }
 
     public void addProduct(Product product) {
+        // If product exists, increment quantity, otherwise add with quantity 1
+        cartItems.put(product, cartItems.getOrDefault(product, 0) + 1);
+    }
 
-        if (cartProducts.contains(product)) {
-            int productIndex = productToID(product);
-            int currentStock = productQuantities.get(productIndex);
-            productQuantities.set(productIndex, currentStock++);
-        } else {
-            cartProducts.add(product);
-            productQuantities.add(0);
-            // lazy way to implement this
-        }
-
+    public double getCartCost(Cart cart) {
+        return util.getCartCost(cart);
     }
 
     public void removeProduct(Product product) {
-
-        if (cartProducts.contains(product)) {
-            int productIndex = productToID(product);
-            int currentStock = productQuantities.get(productIndex);
-            if (currentStock > 0) {
-                productQuantities.set(productIndex, currentStock--);
+        if (cartItems.containsKey(product)) {
+            int currentQuantity = cartItems.get(product);
+            if (currentQuantity > 1) {
+                cartItems.put(product, currentQuantity - 1);
             } else {
-                System.out.println("cannot subtract from 0");
+                cartItems.remove(product);
             }
         } else {
-            System.out.println("error removing product");
+            System.out.println("Product not found in cart");
         }
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.cartProducts = products;
+    // Set multiple products with their quantities
+    public void setProducts(HashMap<Product, Integer> products) {
+        this.cartItems = new HashMap<>(products);
     }
 
     public int getCartSize() {
-        return this.cartProducts.size();
+        // Returns total number of unique products
+        return cartItems.size();
     }
 
+    // Get total number of items (sum of all quantities)
+    public int getTotalItems() {
+        return cartItems.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    // Note: Since we're using a HashMap, getting by index isn't natural
+    // If you need index-based access, you could convert keySet to array
     public Product getProductByIndex(int index) {
-        return this.cartProducts.get(index);
+        Product[] products = cartItems.keySet().toArray(new Product[0]);
+        if (index >= 0 && index < products.length) {
+            return products[index];
+        }
+        throw new IndexOutOfBoundsException("Invalid index: " + index);
     }
 
     public int getProductIndexQuantity(int index) {
-        return productQuantities.get(index);
+        Product product = getProductByIndex(index);
+        return cartItems.get(product);
     }
-
-    private int productToID(Product findProduct) {
-
-        for (int i = 0; i < cartProducts.size(); i++) {
-            if (cartProducts.get(i) == findProduct) {
-                return i;
-            }
-        }
-
-        return -1;
-
-    }
-
-    public ArrayList<Product> getProducts() {
-        return this.cartProducts;
-        return this.productQuantities;
-    }
-
 }
