@@ -1,25 +1,17 @@
 package com.store;
 
-import com.cart.Cart;
-import com.cart.Product;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CartUtil {
 
     public double getCartCost(Cart cart) {
-        double cost = 0.00;
-        ArrayList<Product> Products = cart.getProducts(cart);
-        if (cart.getCartSize() != 0) {
-        for (int i = 0; i < cart.getCartSize(); i++) {
-            double addCost;
-            Product product = Products.get(i);
-            addCost = cart.getProductIndexQuantity(i) * product.getProductCost() ;
-            cost = cost + addCost;
-            return cost;
+        double totalCost = 0.0;
+        HashMap<Product, Integer> cartItems = cart.getCartMap();  // Use getter for cartItems
+        for (Product product : cartItems.keySet()) {
+            int quantity = cartItems.get(product);
+            totalCost += product.getProductCost() * quantity;
         }
-        return cost; 
-        }
-    
-        return cost;
+        return totalCost;
     }
-
 }

@@ -2,7 +2,7 @@ package com.store;
 
 import java.util.HashMap;
 import java.util.Map;
-import main.java.com.cart.CartUtil;
+import com.store.CartUtil;
 
 public class Cart {
     private String cartName;
@@ -29,9 +29,15 @@ public class Cart {
         cartItems.put(product, cartItems.getOrDefault(product, 0) + 1);
     }
 
-    public double getCartCost(Cart cart) {
-        return util.getCartCost(cart);
+   public double getCartCost() { 
+        return util.getCartCost(this);
     }
+
+    public HashMap<Product, Integer> getCartMap() {
+        return this.cartItems;
+    }
+
+
 
     public void removeProduct(Product product) {
         if (cartItems.containsKey(product)) {
