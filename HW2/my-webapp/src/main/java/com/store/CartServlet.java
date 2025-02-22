@@ -19,20 +19,20 @@ public class CartServlet extends HttpServlet {
     private Cart cart = new Cart("cart-1");
     private HashMap<Integer, Product> productMap = new HashMap<>();
     
+    // Initialize Product Data and Cart
     public CartServlet() {
         ProductData data = new ProductData();
-        productMap = data.getInitialProducts();  // Use correct method name
+        productMap = data.getInitialProducts(); 
         initializeCart();
     }
 
     private void initializeCart() {
         HashMap<Product, Integer> initialCart = new HashMap<>();
-        for (Product product : productMap.values()) {
-            initialCart.put(product, 0);
-        }
         cart.setProducts(initialCart);
     }
 
+    // @GET
+    // GET request filter
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.setContentType("application/json");
@@ -48,6 +48,7 @@ public class CartServlet extends HttpServlet {
         }
     }
 
+    // Handle @GET /cart request 
     private void handleGetCart(HttpServletRequest req, HttpServletResponse resp) 
             throws IOException {
         JSONArray cartArrayJson = new JSONArray();
@@ -70,6 +71,7 @@ public class CartServlet extends HttpServlet {
         writeResponse(resp, responseJson);
     }
 
+    // Handle @GET /cart/cost request
     private void handleCartCost(HttpServletRequest req, HttpServletResponse resp) 
             throws IOException {
         JSONObject costJson = new JSONObject();
@@ -79,19 +81,22 @@ public class CartServlet extends HttpServlet {
         writeResponse(resp, costJson);
     }
 
+    // @POST
+    // POST request Filter
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        String pathInfo = req.getPathInfo();
-        if (pathInfo != null && pathInfo.startsWith("/add")) {
+        String servletString = req.getPathInfo();
+        if (servletString != null && servletString.startsWith("/add")) {
             handleAddProducts(req, resp);
         } else {
             resp.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
 
+    // Handle POST /cart/add 
     private void handleAddProducts(HttpServletRequest req, HttpServletResponse resp) 
             throws IOException {
         JSONObject responseJson = new JSONObject();
@@ -129,6 +134,8 @@ public class CartServlet extends HttpServlet {
         writeResponse(resp, responseJson);
     }
 
+    // @DELETE
+    // DELETE request filter
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
         resp.setContentType("application/json");
@@ -142,6 +149,7 @@ public class CartServlet extends HttpServlet {
         }
     }
 
+    // @DELETE cart/clear request handler
     private void handleClearCart(HttpServletRequest req, HttpServletResponse resp) 
             throws IOException {
         JSONObject responseJson = new JSONObject();

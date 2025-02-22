@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class ProductServlet extends HttpServlet {
 
     private HashMap<Integer, Product> productCatalog = new HashMap<>();  // Changed to HashMap
-    private AtomicInteger productIdGenerator = new AtomicInteger(1);
+    private AtomicInteger productIdGenerator = new AtomicInteger(1); // ID generator for now
 
     public ProductServlet() {
         // Initialize products from ProductData
@@ -28,6 +28,8 @@ public class ProductServlet extends HttpServlet {
     }
 
     @Override
+
+    // @GET request filter
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         resp.setContentType("application/json");
@@ -35,12 +37,14 @@ public class ProductServlet extends HttpServlet {
 
         String servletPath = req.getPathInfo();
         if (servletPath == null || servletPath.equals("/")) {
-            handleGetProducts(req, resp);  // Fixed method name
+            handleGetProducts(req, resp);  
         } else {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
+
+    // @GET /product request handler
     private void handleGetProducts(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JSONArray productsArray = new JSONArray();
 
@@ -57,6 +61,7 @@ public class ProductServlet extends HttpServlet {
         writeResponse(resp, responseJson);
     }
 
+    // @POST request filter
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
@@ -73,6 +78,8 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
+    // @POST
+    // products/add handler
     private void handleCreateProduct(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String name = req.getParameter("name");
@@ -105,6 +112,7 @@ public class ProductServlet extends HttpServlet {
         writeResponse(resp, responseJson);
     }
 
+    // @PUT request filter
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -119,6 +127,7 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
+    // @PUT /products/update request handler
     private void handleUpdateProduct(HttpServletRequest req, HttpServletResponse resp) {
         JSONObject responseJson = new JSONObject();
 
@@ -162,6 +171,7 @@ public class ProductServlet extends HttpServlet {
         writeResponse(resp, responseJson);
     }
 
+    // @DELETE request handle
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         resp.setContentType("application/json");

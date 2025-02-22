@@ -9,7 +9,7 @@ public class ProductData {
 
     public HashMap<Integer, Product> getInitialProducts() {
         
-        
+        // Mock Generated Products
         initialProducts.put(1, new Product(1, "Powered Speaker (500W)", 50.00));
         initialProducts.put(2, new Product(2, "Powered Speaker (1000W)", 75.00));
         initialProducts.put(3, new Product(3, "Passive Speaker (12in)", 30.00));
