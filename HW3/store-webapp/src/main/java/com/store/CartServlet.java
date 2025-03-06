@@ -100,9 +100,9 @@ public class CartServlet extends HttpServlet {
     private void handleAddProducts(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         JSONObject responseJson = new JSONObject();
-        String cartID = req.getParameter("id").toString();
-        Integer paramQuantity = Integer.parseInt(req.getParameter("quantity"));
+        
         try {
+            String cartID = req.getParameter("id").toString();
             int productID = Integer.parseInt(req.getParameter("product-id"));
             int modifyQuantity = Integer.parseInt(req.getParameter("quantity"));
 
@@ -110,7 +110,7 @@ public class CartServlet extends HttpServlet {
             if (product != null) {
                 if (modifyQuantity > 0) {
                     for (int i = 0; i < modifyQuantity; i++) {
-                        cartUtil.addProductToCart(cartID, product, paramQuantity);
+                        cartUtil.addProductToCart(cartID, product, modifyQuantity);
                     }
                     int currentQuantity = cartUtil.getCartContents(cartID).get(product);
                     responseJson.put("success", "product " + product.getProductName() +
