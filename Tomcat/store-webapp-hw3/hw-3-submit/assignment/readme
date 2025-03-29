@@ -1,0 +1,106 @@
+[================= HOW TO RUN =================]
+
+HOW TO RUN:
+
+1. Navigate to store-webapp
+
+2. Run build.bat, confirm yes.
+
+3. Terminal, cd tomcat/bin
+
+4. Run startup.bat
+
+5. Access on http://localhost:8090/
+
+[================= API ENDPOINTS =================]
+[======== PRODUCTS ========]
+For products,
+
+To retrieve entire product catalog,
+
+@GET http://localhost:8090/store/products
+Returns
+
+"Products": [
+{
+"price": 50,
+"name": "Product 1",
+"description": "This is a description"
+"id": 1
+
+        } , ... ]
+
+To create a new product,
+
+@POST localhost:8080/store/products/create?name=?&price=?&description=?
+Parameters name=string & price=double
+Returns
+{"id":1,"message":"product created successfully!"}
+
+To update a product,
+
+@PUT localhost:8080/store/products/update?id=?&price=?&description=?
+
+Parameters update=int & price=double & description=string
+
+Returns
+{
+"id": 99,
+"message": "Product updated successfully"
+}
+
+To delete a product,
+
+@DELETE
+localhost:8080/store/products/delete?id=?
+Parameters id=int
+Returns
+{"deleted":1,"name":"Item 1"}
+
+[======== CART ========]
+
+    For Cart related endpoints,
+
+To retrieve items in cart,
+
+@GET localhost:8080/store/cart?id=1
+Returns
+{
+"cart-contents": [
+{
+"quantity": int,
+"price": double,
+"cart-index": int,
+"name": string,
+"id": int
+}, { ... } ] }
+
+To calculate total cost, and size of cart
+
+@GET localhost:8080/store/cart/cost?id=1
+Returns
+{
+"total-items": 0,
+"cost": 0
+}
+
+To add a new item to cart,
+
+@POST localhost:8080/store/cart/add?id=1&product-id=8&quantity=1
+Returns
+{
+"quantity": 1,
+"success": "product {product name} now has quantity {quantity}"
+}
+
+To clear cart,
+
+@DELETElocalhost:8080/store/cart/clear?id=1
+Returns
+{
+"message": "success! cart cleared."
+}
+
+NOTE\* I implemented this with my database by allowing some aribtrary number of carts to exist.
+I have 3 tables,
+cart | product | cart_products, and I use cart_products to map a many to many relation.

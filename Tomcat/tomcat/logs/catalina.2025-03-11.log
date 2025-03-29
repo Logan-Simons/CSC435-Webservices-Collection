@@ -1,0 +1,46 @@
+11-Mar-2025 14:23:56.665 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.98
+11-Mar-2025 14:23:56.669 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 5 2024 19:50:29 UTC
+11-Mar-2025 14:23:56.670 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.98.0
+11-Mar-2025 14:23:56.670 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+11-Mar-2025 14:23:56.670 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+11-Mar-2025 14:23:56.670 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+11-Mar-2025 14:23:56.670 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-21
+11-Mar-2025 14:23:56.670 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           21.0.5+9-LTS-239
+11-Mar-2025 14:23:56.672 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+11-Mar-2025 14:23:56.672 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat
+11-Mar-2025 14:23:56.673 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat
+11-Mar-2025 14:23:56.682 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+11-Mar-2025 14:23:56.683 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+11-Mar-2025 14:23:56.683 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+11-Mar-2025 14:23:56.683 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+11-Mar-2025 14:23:56.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+11-Mar-2025 14:23:56.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat\conf\logging.properties
+11-Mar-2025 14:23:56.684 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+11-Mar-2025 14:23:56.685 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+11-Mar-2025 14:23:56.685 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+11-Mar-2025 14:23:56.685 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+11-Mar-2025 14:23:56.685 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat
+11-Mar-2025 14:23:56.685 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat
+11-Mar-2025 14:23:56.686 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat\temp
+11-Mar-2025 14:23:56.695 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+11-Mar-2025 14:23:56.695 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+11-Mar-2025 14:23:56.695 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+11-Mar-2025 14:23:56.718 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+11-Mar-2025 14:23:57.108 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8090"]
+11-Mar-2025 14:23:57.143 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [720] milliseconds
+11-Mar-2025 14:23:57.210 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+11-Mar-2025 14:23:57.210 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.98]
+11-Mar-2025 14:23:57.237 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat\webapps\store.war]
+11-Mar-2025 14:23:57.931 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+11-Mar-2025 14:23:58.005 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat\webapps\store.war] has finished in [767] ms
+11-Mar-2025 14:23:58.013 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8090"]
+11-Mar-2025 14:23:58.048 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [902] milliseconds
+11-Mar-2025 14:24:08.032 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/store]
+11-Mar-2025 14:24:08.114 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat\webapps\store.war]
+11-Mar-2025 14:24:08.861 INFO [Catalina-utility-1] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+11-Mar-2025 14:24:08.866 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\Tomcat\tomcat\webapps\store.war] has finished in [752] ms
+11-Mar-2025 14:58:15.605 INFO [Thread-1] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8090"]
+11-Mar-2025 14:58:15.615 INFO [Thread-1] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+11-Mar-2025 14:58:15.625 WARNING [Thread-1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [store] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+11-Mar-2025 14:58:15.628 INFO [Thread-1] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8090"]
+11-Mar-2025 14:58:15.645 INFO [Thread-1] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8090"]

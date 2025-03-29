@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "productid": "1",
+      "name": "JBL Speaker",
+      "price": "700"
+    },
+    {
+      "productid": "2",
+      "name": "PTZ3 Camera",
+      "price": "12000"
+    },
+    {
+      "productid": "3",
+      "name": "Sennheiser e835 Microphone",
+      "price": "650"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+mvn clean package && java -jar target/shop-0.1.jar server config.yml
