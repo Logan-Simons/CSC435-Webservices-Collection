@@ -10,7 +10,7 @@ import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.server.DefaultServerFactory;
 
-public class CartConfiguration extends Configuration {
+public class StoreConfiguration extends Configuration {
    
         @Valid
         @NotNull
@@ -27,7 +27,7 @@ public class CartConfiguration extends Configuration {
         }
    
     // This constructor ensures we have a server factory configured
-    public CartConfiguration() {
+    public StoreConfiguration() {
 
         // Set a default server factory if none provided in YAML
         setServerFactory(new DefaultServerFactory());

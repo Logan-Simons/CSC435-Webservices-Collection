@@ -3,8 +3,8 @@ package com.store;
 import org.jdbi.v3.core.Jdbi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.store.db.CartDAO;
-import com.store.resources.CartResource;
+import com.store.db.ProductDAO;
+import com.store.resources.ProductResource;
 
 import io.dropwizard.Application;
 import io.dropwizard.jdbi3.JdbiFactory;
@@ -12,12 +12,10 @@ import io.dropwizard.jetty.HttpConnectorFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import com.store.resources.CartResource;
-
-public class CartApplication extends Application<CartConfiguration> {
+public class StoreApplication extends Application<StoreConfiguration> {
 
     public static void main(String[] args) throws Exception {
-        new CartApplication().run(args);
+        new StoreApplication().run(args);
     }
 
     @Override
@@ -26,7 +24,7 @@ public class CartApplication extends Application<CartConfiguration> {
     }
 
     @Override
-    public void initialize(Bootstrap<CartConfiguration> bootstrap) {
+    public void initialize(Bootstrap<StoreConfiguration> bootstrap) {
        
        
 
@@ -36,15 +34,14 @@ public class CartApplication extends Application<CartConfiguration> {
         mapper.registerSubtypes(HttpConnectorFactory.class);
     }
 
-    @Override
-    public void run(CartConfiguration configuration, Environment environment) {
-        
-        final JdbiFactory factory = new JdbiFactory();
+  @Override
+public void run(StoreConfiguration configuration, Environment environment) {
+    final JdbiFactory factory = new JdbiFactory();
     final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
-    final CartDAO dao = jdbi.onDemand(CartDAO.class);
-        
-        // Register the resource
-        final CartResource resource = new CartResource(dao, new HandleProvider(jdbi));
-        environment.jersey().register(resource);
-    }
+    final ProductDAO dao = jdbi.onDemand(ProductDAO.class);
+    
+    // Register the resource
+    final ProductResource resource = new ProductResource(dao);
+    environment.jersey().register(resource);
+}
 }

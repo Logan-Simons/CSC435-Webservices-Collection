@@ -5,6 +5,7 @@ import java.util.List;
 import org.jdbi.v3.sqlobject.SqlObject;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -26,6 +27,16 @@ public interface ProductDAO extends SqlObject {
     @SqlQuery("SELECT * FROM products WHERE id = :id")
     @RegisterBeanMapper(Product.class)
     Product findById(@Bind("id") int id);
+
+    @SqlQuery("SELECT * FROM products")
+    @RegisterBeanMapper(Product.class)
+    List<Product> getAllProducts();
+
+    @SqlUpdate("UPDATE products SET name = :name, price = :price WHERE id = :id")
+    int update(@BindBean Product product);
+
+    @SqlUpdate("DELETE FROM products WHERE id = :id")
+    int delete(@Bind("id") int id);
 
 
 }
