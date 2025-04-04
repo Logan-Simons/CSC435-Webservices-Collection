@@ -26,10 +26,8 @@ public class StoreConfiguration extends Configuration {
             this.database = factory;
         }
    
-    // This constructor ensures we have a server factory configured
     public StoreConfiguration() {
-
-        // Set a default server factory if none provided in YAML
+        
         setServerFactory(new DefaultServerFactory());
     }
 }

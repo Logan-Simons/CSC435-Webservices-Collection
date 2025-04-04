@@ -27,23 +27,22 @@ public class StoreApplication extends Application<StoreConfiguration> {
 
     @Override
     public void initialize(Bootstrap<StoreConfiguration> bootstrap) {
-
-        // Register HttpConnectorFactory with the ObjectMapper
         ObjectMapper mapper = bootstrap.getObjectMapper();
-        // Register the connector factory
         mapper.registerSubtypes(HttpConnectorFactory.class);
     }
 
     @Override
     public void run(StoreConfiguration configuration, Environment environment) {
+        // connect to database with JDBI
         final JdbiFactory factory = new JdbiFactory();
         final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+        // initialize connection to our DAO classes with JDBI
         final ProductDAO productDAO = jdbi.onDemand(ProductDAO.class);
         final CartDAO cartDAO = jdbi.onDemand(CartDAO.class);
-        // Register the resource
+        // initialize resources
         final ProductResource productResource = new ProductResource(productDAO);
         final CartResource cartResource = new CartResource(cartDAO);
-
+        // register our web-service resources
         environment.jersey().register(productResource);
         environment.jersey().register(cartResource);
     }

@@ -1,26 +1,31 @@
 package com.store.db;
 
-import com.store.core.Product;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.AbstractMap;
-import java.util.Map;
+import com.store.core.CartProducts;
+import com.store.core.Product;
 
-public class CartProductMapper implements RowMapper<Map.Entry<Product, Integer>> {
+public class CartProductMapper implements RowMapper<CartProducts> {
+
     @Override
-    public Map.Entry<Product, Integer> map(ResultSet rs, StatementContext ctx) throws SQLException {
+    public CartProducts map(ResultSet rs, StatementContext ctx) throws SQLException {
+        // create CartProducts object
+        CartProducts cp = new CartProducts();
+        // define cartID
+        cp.setCartid(rs.getInt("cartid"));
+        // create a new Product, read from result set and set product values
         Product product = new Product();
-        // Adjust these if needed:
-        product.setId(rs.getInt("productid"));
-        // If you have more fields, set them accordingly:
-        // product.setName(rs.getString("name"));
-        // product.setDescription(rs.getString("description"));
-        // product.setPrice(rs.getDouble("price"));
+        product.setId(rs.getInt("p_productid"));
+        product.setName(rs.getString("name"));
+        product.setDescription(rs.getString("description"));
+        product.setPrice(rs.getDouble("price"));
+        cp.setProduct(product);
         
-        int quantity = rs.getInt("total_quantity");
-        return new AbstractMap.SimpleEntry<>(product, quantity);
+        cp.setQuantity(rs.getInt("total_quantity"));
+        return cp;
     }
 }

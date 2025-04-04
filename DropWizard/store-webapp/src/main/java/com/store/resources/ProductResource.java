@@ -23,16 +23,16 @@ import com.store.db.ProductDAO;
 public class ProductResource {
 
     private final ProductDAO productDAO;
+    // using atomic integer to generate productIDs
     private final AtomicInteger idCounter = new AtomicInteger(1);
 
     public ProductResource(ProductDAO productDAO) {
         this.productDAO = productDAO;
     }
 
-    // Create a new product
+    // create a new product
     @Path("/create")
     @POST
-    // Remove @Consumes if you're not sending JSON in the body
     public Response createProduct(
                                   @QueryParam("name") String name,
                                   @QueryParam("description") String description,
@@ -49,7 +49,7 @@ public class ProductResource {
         
         return Response.status(Response.Status.CREATED).entity(product).build();
     }
-    // Retrieve a product by ID
+    // retrieve a product by ID
     @GET
     @Path("/id")
     public Response getProduct(@QueryParam("p") int id) {
@@ -69,7 +69,7 @@ public class ProductResource {
         return Response.ok(products).build();
     }
 
-    // Search for products by name (using query parameter 'search')
+    // search for products by name (using query parameter 'search')
     @GET
     @Path("/search")
     public Response searchProducts(@QueryParam("q") String search) {
@@ -83,6 +83,7 @@ public class ProductResource {
         return Response.ok(products).build();
     }
 
+    // update a product
     @PUT
     @Path("/update")
     public Response updateProduct(@QueryParam("id") int id,

@@ -1,40 +1,39 @@
 package com.store.core;
 
-import java.util.HashMap;
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 public class CartProducts {
     
-    private Integer id;
-    private HashMap<Product, Integer> cartProducts;
+    @ColumnName("cartid")
+    private Integer cartid;
+    
+    // use product object, this is to avoid additional fetches to the database and for
+    // better readibility on the view layer
+    private Product product;
+    
+    @ColumnName("total_quantity")
+    private Integer quantity;
 
-    public CartProducts() {
-        this.cartProducts = new HashMap<>();
+    // Getters and setters
+
+    public Integer getCartid() {
+        return cartid;
     }
-
-    public CartProducts(HashMap<Product, Integer> products) {
-        this.cartProducts = products;
+    public void setCartid(Integer cartid) {
+        this.cartid = cartid;
     }
-
-    public void setProducts(HashMap<Product, Integer> products) {
-        this.cartProducts = products;
+    
+    public Product getProduct() {
+        return product;
     }
-
-    public void addProduct(Product product, int quantity) {
-        int currentQuantity = cartProducts.get(product);
-        cartProducts.put(product, currentQuantity + 1);
+    public void setProduct(Product product) {
+        this.product = product;
     }
-
-    public void subtractProduct(Product product, int quantity) {
-        int currentQuantity = cartProducts.get(product);
-
-        if (currentQuantity > 0) {
-            cartProducts.put(product, currentQuantity - 1);
-        }
+    
+    public Integer getQuantity() {
+        return quantity;
     }
-
-    public void clearCart() {
-        this.cartProducts.clear();
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
-
-
 }
