@@ -16,27 +16,28 @@ import com.store.core.Product;
 
 public interface ProductDAO extends SqlObject {
     
-    @SqlUpdate("INSERT INTO products (name, price) VALUES (:name, :price)")
+    @SqlUpdate("INSERT INTO product (productid, name, description, price) VALUES (:productid, :name, :description, :price)")
     @GetGeneratedKeys
-    int insert(@Bind("name") String name, @Bind("price") double price);
+    int insert(@Bind("productid") int productid, @Bind("name") String name, @Bind("description") String description, @Bind("price") double price);
 
-    @SqlQuery("SELECT * FROM WHERE name ILIKE '%' || :search || '%'")
+    @SqlQuery("SELECT productid AS id, name, description, price FROM product WHERE name ILIKE '%' || :search || '%'")
     @RegisterBeanMapper(Product.class)
     List<Product> searchProductsByName(@Bind("search") String search);
 
-    @SqlQuery("SELECT * FROM products WHERE id = :id")
-    @RegisterBeanMapper(Product.class)
-    Product findById(@Bind("id") int id);
 
-    @SqlQuery("SELECT * FROM products")
+    @SqlQuery("SELECT productid AS id, name, description, price FROM product WHERE productid = :productid")
+    @RegisterBeanMapper(Product.class)
+    Product findById(@Bind("productid") int productid);
+
+    @SqlQuery("SELECT productid AS id, name, description, price FROM product")
     @RegisterBeanMapper(Product.class)
     List<Product> getAllProducts();
 
-    @SqlUpdate("UPDATE products SET name = :name, price = :price WHERE id = :id")
+    @SqlUpdate("UPDATE product SET name = :name, description = :description, price = :price WHERE productid = :id")
     int update(@BindBean Product product);
 
-    @SqlUpdate("DELETE FROM products WHERE id = :id")
-    int delete(@Bind("id") int id);
+    @SqlUpdate("DELETE FROM product WHERE productid = :productid")
+    int delete(@Bind("productid") int productid);
 
 
 }
