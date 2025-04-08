@@ -10,28 +10,28 @@ import com.store.shopping_cart.model.Product;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private HashMap<Integer, Product> productRepo = new HashMap<>();
+    private HashMap<Integer, Product> productMap = new HashMap<>();
 
     @Override
     public void createProduct(Product product) {
-        productRepo.put(product.getProductid(), product);
+        productMap.put(product.getProductid(), product);
     }
 
     @Override
     public void updateProduct(int id, Product product) {
-        productRepo.put(product.getProductid(), product);
+        productMap.put(product.getProductid(), product);
     }
 
     @Override
     public void deleteProduct(int id) {
-        productRepo.remove(productRepo.get(id));
+        productMap.remove(productMap.get(id));
     }
 
     @Override
     public Collection<Product> getProducts() {
 
 
-        return productRepo.values();
+        return productMap.values();
 
     }
     

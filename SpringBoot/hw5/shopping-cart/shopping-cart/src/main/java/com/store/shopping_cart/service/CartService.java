@@ -2,58 +2,17 @@ package com.store.shopping_cart.service;
 
 import java.util.HashMap;
 
-import com.store.shopping_cart.model.Cart;
 import com.store.shopping_cart.model.Product;
 
 
-public class CartService {
+public interface CartService {
     
-    private Cart Cart;
-    private HashMap<Product, Integer> CartProducts;
-
-
-    public void setCart(int id){
-        this.Cart = new Cart(id);
-    }
-
-    public void setCartProducts(HashMap<Product, Integer> CartProducts) {
-
-        this.CartProducts = CartProducts;
-
-    }
-
-    public int addProduct(Product product, int quantity) {
-
-        int productQuantity = CartProducts.get(product.getProductid());
-        int targetQuantity = productQuantity + quantity;
-
-        return targetQuantity;
-
-    }
-
-    public int removeProduct(Product product, int quantity) {
-
-        int productQuantity = CartProducts.get(product.getProductid());
-        int targetQuantity = productQuantity - quantity;
-
-        if (targetQuantity < 0) {
-            return 0;
-        }
-
-        return targetQuantity;
-
-    }
-
-    public double getCartCost() {
-
-        double cost = 0;
-        for (Product product : CartProducts.keySet()) {
-            cost =+ product.getPrice();
-        }
-        return cost;
-
-    }
-
-
+    public abstract void setCart(int cartid);
+    public abstract void setCartProducts(int cartid, HashMap<Product, Integer> CartProducts);
+    public abstract HashMap<Product, Integer> getCartProducts(int cartid);
+    public abstract int addProduct(int cartid, Product product, int quantity);
+    public abstract int removeProduct(int cartid, Product product, int quantity);
+    public abstract double getCartCost(int cartid);
+   
 
 }
