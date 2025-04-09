@@ -5,7 +5,7 @@ import java.util.List;
 public class Cart {
     
 
-    private int cartID;
+    private int cartid;
     private List<CartItem> cartProducts;
 
     
@@ -25,18 +25,18 @@ public class Cart {
 
 
     public Cart(int id) {
-    this.cartID = id;
+    this.cartid = id;
     }
 
     
 
 
-    public void setCartID(int id) {
-        this.cartID = id;
+    public void setcartid(int id) {
+        this.cartid = id;
     }
 
-    public int getCartID() {
-        return this.cartID;
+    public int getcartid() {
+        return this.cartid;
     }
 
 }

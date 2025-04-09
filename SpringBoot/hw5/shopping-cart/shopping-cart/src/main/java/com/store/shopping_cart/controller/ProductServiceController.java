@@ -50,4 +50,9 @@ public class ProductServiceController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/products/id/{id}")
+    public ResponseEntity<Object> findProductByID(@PathVariable int id) {
+        return new ResponseEntity<>(productService.getProductByID(id), HttpStatus.OK);
+    }
+
 }

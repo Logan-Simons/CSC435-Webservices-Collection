@@ -1,38 +1,42 @@
 package com.store.shopping_cart.service;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.store.shopping_cart.model.Product;
+import com.store.shopping_cart.util.ProductDAO;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private HashMap<Integer, Product> productMap = new HashMap<>();
+    private ProductDAO productDAO;
 
     @Override
     public void createProduct(Product product) {
-        productMap.put(product.getProductid(), product);
+        productDAO.insertProduct(product.getName(), product.getDescription(), product.getPrice());
     }
 
     @Override
-    public void updateProduct(int id, Product product) {
-        productMap.put(product.getProductid(), product);
+    public void updateProduct(int productid, Product product) {
+        productDAO.updateProduct(productid, product.getName(), product.getDescription(), product.getPrice());
     }
 
     @Override
-    public void deleteProduct(int id) {
-        productMap.remove(productMap.get(id));
+    public void deleteProduct(int productid) {
+        productDAO.deleteProduct(productid);
     }
 
     @Override
-    public Collection<Product> getProducts() {
+    public List<Product> getProducts() {
 
+        return productDAO.getAllProducts();
 
-        return productMap.values();
+    }
 
+    @Override
+    public Product getProductByID(int productid) {
+        return productDAO.findProductById(productid);
     }
     
 }

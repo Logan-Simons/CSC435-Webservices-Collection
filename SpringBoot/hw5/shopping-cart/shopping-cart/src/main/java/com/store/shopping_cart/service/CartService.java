@@ -1,17 +1,16 @@
 package com.store.shopping_cart.service;
 
-import java.util.HashMap;
+import java.util.List;
 
-import com.store.shopping_cart.model.Product;
+import com.store.shopping_cart.model.CartItem;
 
 
 public interface CartService {
     
-    public abstract void setCart(int cartid);
-    public abstract void setCartProducts(int cartid, HashMap<Product, Integer> CartProducts);
-    public abstract HashMap<Product, Integer> getCartProducts(int cartid);
-    public abstract int addProduct(int cartid, Product product, int quantity);
-    public abstract int removeProduct(int cartid, Product product, int quantity);
+
+    public abstract List<CartItem> getCartProducts(int cartid);
+    public abstract int addProduct(int cartid, int productid, int quantity);
+    public abstract int subtractProduct(int cartid, int productid, int quantity);
     public abstract double getCartCost(int cartid);
    
 

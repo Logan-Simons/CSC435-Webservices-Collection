@@ -4,67 +4,70 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.store.shopping_cart.model.Cart;
-import com.store.shopping_cart.model.Product;
 import com.store.shopping_cart.model.CartItem;
+import com.store.shopping_cart.util.CartDAO;
 
 @Service
 public class CartServiceImpl implements CartService {
 
 
-    private Cart Cart;
 
-    @Override
-    public void setCart(int id){
-        this.Cart = new Cart(id);
-    }
-
-    @Override
-    public void setCartProducts(int cartid, List<CartItem> CartProducts) {
-
-        this.Cart.setCartProducts(CartProducts);
+    private CartDAO cartDAO;
 
 
-    }
+  
+    
 
     @Override 
     public List<CartItem> getCartProducts(int cartid) {
 
-        return this.Cart.getCartProducts();
+        return cartDAO.getCartProducts(cartid);
 
     }
 
 
     @Override
-    public int addProduct(int cartid, Product product, int quantity) {
+    public int addProduct(int cartid, int productid, int quantity) {
 
-      
+      return cartDAO.addProduct(cartid, productid, quantity);
 
 
     }
 
     @Override
-    public int removeProduct(int cartid, Product product, int quantity) {
+    public int subtractProduct(int cartid, int productid, int quantity) {
 
-        int productQuantity = Cart.getCartProducts().get(product);
-        int targetQuantity = productQuantity - quantity;
 
-        if (targetQuantity < 0) {
-            return 0;
+        List<CartItem> cartItems = cartDAO.getCartProducts(cartid);
+        int itemQuantity = 0;
+        int finalQuantity = 0;
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getProductid() == productid) {
+                itemQuantity = item.getQuantity();
+                if (itemQuantity - quantity <= 0) {
+                    cartDAO.deleteCartProduct(cartid, productid);
+                } else {
+                    finalQuantity = itemQuantity - quantity;
+                    cartDAO.subtractQuantity(cartid, productid, finalQuantity);
+                    
+                }
+            }
         }
 
-        return targetQuantity;
+
+        return finalQuantity;
 
     }
 
+    
     @Override
     public double getCartCost(int cartid) {
 
         
         double cost = 0;
-        for (Product product : this.Cart.getCartProducts().keySet() ) {
-            int quantity = Cart.getCartProducts().get(product);
-            cost =+ (product.getPrice() * quantity);
+        for (CartItem cartItem : cartDAO.getCartProducts(cartid)) {
+            int quantity = cartItem.getQuantity();
+            cost =+ (cartItem.getProduct().getPrice() * quantity);
         }
         return cost;
 
