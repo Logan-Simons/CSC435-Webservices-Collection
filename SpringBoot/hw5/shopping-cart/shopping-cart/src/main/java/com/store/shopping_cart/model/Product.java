@@ -36,7 +36,7 @@ public class Product {
         this.price = price;
     }
 
-    public int getProductid() {
+    public Integer getProductid() {
         return productid;
     }
     public void setProductid(int productid) {

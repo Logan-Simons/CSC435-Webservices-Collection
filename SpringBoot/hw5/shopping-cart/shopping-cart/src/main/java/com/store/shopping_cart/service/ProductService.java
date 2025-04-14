@@ -28,12 +28,15 @@ public class ProductService {
 
     }
 
+    public boolean productExists(int productid) {
+        return productRepo.existsById(productid);
+    }
+
     public Product createProduct(Product product) {
         return productRepo.save(product);
      }
 
     
-
 
     public Product updateProduct(int productid, Product product) {
        Product existing = getProduct(productid);

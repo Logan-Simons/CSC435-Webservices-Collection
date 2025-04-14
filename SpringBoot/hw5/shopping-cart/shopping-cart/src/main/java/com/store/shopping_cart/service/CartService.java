@@ -1,60 +1,134 @@
 package com.store.shopping_cart.service;
 
+import java.util.Iterator;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.store.shopping_cart.model.Cart;
+import com.store.shopping_cart.model.CartItem;
 import com.store.shopping_cart.model.Product;
 import com.store.shopping_cart.repo.CartRepository;
 import com.store.shopping_cart.repo.ProductRepository;
 
-import jakarta.transaction.Transactional;
-
 @Service
 public class CartService {
-
-    private final CartRepository cartRepository;
-    private final ProductRepository productRepository;
-
-    public CartService(CartRepository cartRepository, ProductRepository productRepository) {
-        this.cartRepository = cartRepository;
-        this.productRepository = productRepository;
+    
+    @Autowired
+    private CartRepository cartRepository;
+    
+    
+    @Autowired
+    private ProductRepository productRepository;
+    
+    public Cart createCart() {
+        Cart cart = new Cart();
+        cartRepository.save(cart);
+        return cart;
     }
-
+    
     @Transactional
-    public Cart addProduct(Integer cartId, Integer productId, int quantity) {
+    public Cart getCart(int cartId) {
         Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        cart.addProduct(product, quantity);
-
-        return cartRepository.save(cart);
+            .orElseThrow(() -> new RuntimeException("Cart not found"));
+        return cart;
     }
-
+    
     @Transactional
-    public Cart subtractProduct(Integer cartId, Integer productId, int quantity) {
-        Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+    public void addProduct(int cartId, int productId, int quantity) {
+        
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        cart.subtractProduct(product, quantity);
-
-        return cartRepository.save(cart);
-    }
-
-    public Cart getCart(Integer cartId) {
-        return cartRepository.findById(cartId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
-    }
-
-    public Double getCartCost(Integer cartId) {
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+            
         
         Cart cart = cartRepository.findById(cartId)
-        .orElseThrow(() -> new RuntimeException("Cart not found"));
+            .orElseThrow(() -> new RuntimeException("Cart not found"));
 
-        return cart.getCartCost();
+        for (CartItem item : cart.getItems()) {
+        if (item.getProduct().getProductid().equals(product.getProductid())) {
+            cart.updateItem(item, quantity);
+            cartRepository.save(cart);
+            return;
+        }
+    }
+ 
+        CartItem newItem = new CartItem();
+        newItem.setCart(cart);
+        newItem.setProduct(product);
+        newItem.setQuantity(quantity);
 
+        cart.addItem(newItem);
+        cartRepository.save(cart);
+       
+    }
+    
+    @Transactional
+    public void subtractProduct(int cartId, int productId, int quantity) {
+           
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+            
+       
+        Cart cart = cartRepository.findById(cartId)
+            .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+
+        Iterator<CartItem> iterator = cart.getItems().iterator();
+        while (iterator.hasNext()) {
+            CartItem item = iterator.next();
+
+            if (item.getProduct().getProductid().equals(product.getProductid())) {
+                cart.updateItem(item, -1*quantity);
+
+                if (item.getQuantity() <= 0) {
+                    iterator.remove();
+                }
+                break;
+            }
+        } 
+        cartRepository.save(cart);
+    }
+    
+    @Transactional
+    public double getCartCost(int cartId) {
+        
+        Cart cart = cartRepository.findById(cartId)
+            .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+        double cost = 0;
+        for (CartItem item : cart.getItems()) {
+            if (item.getProduct() != null) {
+                cost += item.getQuantity() * item.getProduct().getPrice();
+            } else {
+                throw new RuntimeException("Missing product information");
+            }
+            
+        }
+
+        return cost;
+      
+    }
+    
+    @Transactional
+    public Cart clearCart(int cartId) {
+          Cart cart = cartRepository.findById(cartId)
+          .orElseThrow(() -> new RuntimeException("Cart not found"));
+    
+    cart.getItems().clear();
+    cartRepository.save(cart);
+    return cart;
+    }
+
+    public String deleteCart(int cartId) {
+        cartRepository.deleteById(cartId);
+        if (cartRepository.existsById(cartId)) {
+            return "Cart " + cartId + " was not deleted.";
+        }
+        return "Cart " + cartId + " successfully deleted";
+    }
+
+    public boolean cartExists(int cartId) {
+        return cartRepository.existsById(cartId);
     }
 }
