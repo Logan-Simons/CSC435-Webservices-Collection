@@ -1,4 +1,10 @@
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\core\Cart.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\resources\ProductResource.java
 C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\resources\CartResource.java
-C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\CartConfiguration.java
-C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\CartApplication.java
-C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\api\CartItems.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\StoreConfiguration.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\core\CartProducts.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\db\ProductDAO.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\StoreApplication.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\core\Product.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\db\CartDAO.java
+C:\Users\Logan\Documents\GitHub\CSC435-Webservices-Collection\DropWizard\store-webapp\src\main\java\com\store\db\CartProductMapper.java

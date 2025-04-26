@@ -3,12 +3,58 @@ package com.store.shopping_cart.service;
 
 import java.util.List;
 
-import com.store.shopping_cart.model.Product;
+import org.springframework.stereotype.Service;
 
-public interface ProductService {
-    public abstract void createProduct(Product product);
-    public abstract void updateProduct(int id, Product product);
-    public abstract void deleteProduct(int id);
-    public abstract List<Product> getProducts();
-    public abstract Product getProductByID(int id);
+import com.store.shopping_cart.model.Product;
+import com.store.shopping_cart.repo.ProductRepository;
+
+@Service
+public class ProductService {
+
+    private final ProductRepository productRepo;
+
+    public ProductService(ProductRepository repo) {
+        this.productRepo = repo;
+    }
+
+        public Product getProduct(Integer id) {
+        return productRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+    }
+
+    public List<Product> getProducts() {
+
+        return productRepo.findAll();
+
+    }
+
+    public boolean productExists(int productid) {
+        return productRepo.existsById(productid);
+    }
+
+    public Product createProduct(Product product) {
+        return productRepo.save(product);
+     }
+
+    
+
+    public Product updateProduct(int productid, Product product) {
+       Product existing = getProduct(productid);
+       existing.setProductid(productid);
+       existing.setName(product.getName());
+       existing.setDescription(product.getDescription());
+       existing.setPrice(product.getPrice());
+       productRepo.save(existing);
+       return existing;
+    }
+
+    
+    public void deleteProduct(int productid) {
+        productRepo.deleteById(productid);
+    }
+
+    
+    
+
 }
+

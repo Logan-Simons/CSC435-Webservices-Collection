@@ -1,4 +1,10 @@
+com\store\StoreApplication.class
+com\store\core\Product.class
+com\store\db\ProductDAO.class
+com\store\core\Cart.class
+com\store\db\CartProductMapper.class
+com\store\db\CartDAO.class
 com\store\resources\CartResource.class
-com\store\api\CartItems.class
-com\store\CartApplication.class
-com\store\CartConfiguration.class
+com\store\StoreConfiguration.class
+com\store\core\CartProducts.class
+com\store\resources\ProductResource.class
